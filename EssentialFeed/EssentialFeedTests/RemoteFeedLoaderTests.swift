@@ -137,12 +137,20 @@ private extension RemoteFeedLoaderTests {
 		}
 	}
 	
-	func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
+	func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
 		let client = HTTPClientSpy()
 		let sut = RemoteFeedLoader(url: url, client: client)
+		trackFromMemoryLeaks(sut, file: file, line: line)
+		trackFromMemoryLeaks(client, file: file, line: line)
 		return (sut, client)
 	}
 	
+	func trackFromMemoryLeaks(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+	
+		addTeardownBlock { [weak instance] in
+			XCTAssertNil(instance, "Instance should've been deallocated, potential memory leak", file: file, line: line)
+		}
+	}
 	func expect(_ sut: RemoteFeedLoader, toCompleteWith result: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
 		
 		var capturedResults = [RemoteFeedLoader.Result]()
