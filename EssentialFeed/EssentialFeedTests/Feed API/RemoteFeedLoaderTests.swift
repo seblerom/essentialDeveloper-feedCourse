@@ -166,14 +166,24 @@ private extension RemoteFeedLoaderTests {
 			XCTAssertNil(instance, "Instance should've been deallocated, potential memory leak", file: file, line: line)
 		}
 	}
-	func expect(_ sut: RemoteFeedLoader, toCompleteWith result: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+	func expect(_ sut: RemoteFeedLoader, toCompleteWith expectedResult: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
 		
-		var capturedResults = [RemoteFeedLoader.Result]()
-		sut.load { capturedResults.append($0) }
+		let exp = expectation(description: "Wait for load completion")
+		sut.load { receivedResults in
+			switch (receivedResults, expectedResult) {
+			case let (.success(receivedItems), .success(expectedItems)):
+				XCTAssertEqual(receivedItems, expectedItems, file: file, line: line)
+			case let (.failure(expectedError), .failure(receivedError)):
+				XCTAssertEqual(expectedError, receivedError, file: file, line: line)
+			default:
+				XCTFail("Expected result: \(expectedResult) got: \(receivedResults) instead", file: file, line: line)
+			}
+			exp.fulfill()
+		}
 		
 		action()
 		
-		XCTAssertEqual(capturedResults, [result], file: file, line: line)
+		wait(for: [exp], timeout: 1.0)
 	}
 	
 	func makeItem(id: UUID, imageURL: URL, description: String? = nil, location: String? = nil) -> (model: FeedItem, json: [String: Any]) {
