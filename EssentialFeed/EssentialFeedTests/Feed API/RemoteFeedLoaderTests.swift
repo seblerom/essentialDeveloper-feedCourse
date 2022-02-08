@@ -160,12 +160,6 @@ private extension RemoteFeedLoaderTests {
 		return (sut, client)
 	}
 	
-	func trackFromMemoryLeaks(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
-	
-		addTeardownBlock { [weak instance] in
-			XCTAssertNil(instance, "Instance should've been deallocated, potential memory leak", file: file, line: line)
-		}
-	}
 	func expect(_ sut: RemoteFeedLoader, toCompleteWith expectedResult: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
 		
 		let exp = expectation(description: "Wait for load completion")
