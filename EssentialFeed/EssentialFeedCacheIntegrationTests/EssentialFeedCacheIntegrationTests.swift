@@ -80,10 +80,10 @@ private extension EssentialFeedCacheIntegrationTests {
         let exp = expectation(description: "Wait for load completion")
         sut.load { result in
             switch result {
-            case let .success(characterFeed):
-                XCTAssertEqual(characterFeed, expectedFeed, "Expected empty feed", file: file, line: line)
+            case let .success(feed):
+                XCTAssertEqual(feed, expectedFeed, "Expected empty feed", file: file, line: line)
             case let .failure(error):
-                XCTFail("Expected successful character feed result, got: \(error) instead", file: file, line: line)
+                XCTFail("Expected successful feed result, got: \(error) instead", file: file, line: line)
             }
             exp.fulfill()
         }

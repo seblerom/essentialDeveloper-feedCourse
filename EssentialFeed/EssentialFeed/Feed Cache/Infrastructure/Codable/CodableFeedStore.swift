@@ -29,7 +29,7 @@ public final class CodableFeedStore: FeedStore {
             do {
                 let decoder = JSONDecoder()
                 let cache = try decoder.decode(Cache.self, from: data)
-                completion(.found(characters: cache.localItems, timestamp: cache.timestamp))
+                completion(.found(feed: cache.localItems, timestamp: cache.timestamp))
             } catch {
                 completion(.failure(error))
             }
@@ -43,7 +43,7 @@ public final class CodableFeedStore: FeedStore {
         queue.async(flags: .barrier) {
             do {
                 let encoder = JSONEncoder()
-                let cache = Cache(items: items.map(CodableCharacterItem.init), timestamp: timestamp)
+                let cache = Cache(items: items.map(CodableFeedItem.init), timestamp: timestamp)
                 let encoded = try encoder.encode(cache)
                 try encoded.write(to: storeURL)
                 completion(nil)
@@ -76,7 +76,7 @@ public final class CodableFeedStore: FeedStore {
 private extension CodableFeedStore {
     
     private struct Cache: Codable {
-        let items: [CodableCharacterItem]
+        let items: [CodableFeedItem]
         let timestamp: Date
         
         var localItems: [LocalFeedItem] {
@@ -84,7 +84,7 @@ private extension CodableFeedStore {
         }
     }
     
-    private struct CodableCharacterItem: Codable {
+    private struct CodableFeedItem: Codable {
         private let id: UUID
         private let imageURL: URL
         private let description: String?

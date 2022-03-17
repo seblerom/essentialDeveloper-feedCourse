@@ -10,7 +10,7 @@ import Foundation
 
 public enum RetrievedCachedFeedResult {
     case empty
-    case found(characters: [LocalFeedItem], timestamp: Date)
+    case found(feed: [LocalFeedItem], timestamp: Date)
     case failure(Error)
 }
 

@@ -22,7 +22,7 @@ class FeedStoreSpy: FeedStore {
     
     private(set) var receivedMessages = [ReceivedMessage]()
     
-    // MARK: CharacterStore conformance
+    // MARK: FeedStore conformance
     func deleteCache(completion: @escaping DeletionCompletion) {
         deletionCompletions.append(completion)
         receivedMessages.append(.deleteCachedFeed)
@@ -63,7 +63,7 @@ class FeedStoreSpy: FeedStore {
         retrievalCompletions[index](.empty)
     }
     
-    func completeRetrieval(with characters: [LocalFeedItem], and timestamp: Date, index: Int = 0) {
-        retrievalCompletions[index](.found(characters: characters, timestamp: timestamp))
+    func completeRetrieval(with feed: [LocalFeedItem], and timestamp: Date, index: Int = 0) {
+        retrievalCompletions[index](.found(feed: feed, timestamp: timestamp))
     }
 }

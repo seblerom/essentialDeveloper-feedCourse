@@ -21,9 +21,9 @@ class ManagedFeed: NSManagedObject {
 
 extension ManagedFeed {
     
-    static func characters(from localCharacterFeed: [LocalFeedItem], in context: NSManagedObjectContext) -> NSOrderedSet {
+    static func feed(from localFeed: [LocalFeedItem], in context: NSManagedObjectContext) -> NSOrderedSet {
         
-        NSOrderedSet(array: localCharacterFeed.map { local in
+        NSOrderedSet(array: localFeed.map { local in
             
             let managedFeed = ManagedFeed(context: context)
             managedFeed.id = local.id

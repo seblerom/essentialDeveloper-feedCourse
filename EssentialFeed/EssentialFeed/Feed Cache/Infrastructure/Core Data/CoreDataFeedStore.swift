@@ -39,7 +39,7 @@ public final class CoreDataFeedStore: FeedStore {
             do {
                 let managedCache = try ManagedCache.newUniqueInstance(in: context)
                 managedCache.timestamp = timestamp
-                managedCache.feed = ManagedFeed.characters(from: items, in: context)
+                managedCache.feed = ManagedFeed.feed(from: items, in: context)
                 
                 try context.save()
                 completion(nil)
@@ -55,7 +55,7 @@ public final class CoreDataFeedStore: FeedStore {
        perform { context in
             do {
                 if let cache = try ManagedCache.find(in: context) {
-                    completion(.found(characters: cache.localCharacterFeed, timestamp: cache.timestamp))
+                    completion(.found(feed: cache.localFeed, timestamp: cache.timestamp))
                 } else {
                     completion(.empty)
                 }
