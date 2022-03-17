@@ -121,8 +121,12 @@ private extension CacheFeedUseCaseTests {
         
         var receivedError: Error?
         
-        sut.save(uniqueItems().models) { error in
-            receivedError = error
+        sut.save(uniqueItems().models) { result in
+            
+            if case let Result.failure(error) = result {
+                receivedError = error
+            }
+            
             exp.fulfill()
         }
         
