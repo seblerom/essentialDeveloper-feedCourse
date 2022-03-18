@@ -26,7 +26,7 @@
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedImageCell" rowHeight="580" id="tns-4e-GEQ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FeedImageCell" rowHeight="580" id="tns-4e-GEQ" customClass="FeedImageCell" customModule="Prototype" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="60.5" width="414" height="580"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tns-4e-GEQ" id="JwZ-71-Usz">
@@ -106,6 +106,12 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="gnw-iY-kF4" secondAttribute="bottom" priority="999" constant="6" id="yqt-VA-mCn"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="ONh-A4-W7F" id="Grs-sc-L2L"/>
+                                    <outlet property="feedImageView" destination="eAP-I3-J23" id="1dB-3n-Tu5"/>
+                                    <outlet property="locationContainer" destination="7oX-Tm-ffw" id="tEO-Gp-7sE"/>
+                                    <outlet property="locationLabel" destination="ayK-Gs-29K" id="cTT-w5-CJL"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -117,7 +123,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EoD-Zn-OMU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="400.00000000000006" y="150.66964285714286"/>
+            <point key="canvasLocation" x="403" y="151"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wz2-TA-zzD">
