@@ -10,19 +10,19 @@ import EssentialFeed
 import EssentialFeediOS
 
 final class FeedViewControllerTests: XCTestCase {
-
+    
     func test_loadFeedActions_requestFeedFromLoader() {
         let (sut, loader) = makeSUT()
-        XCTAssertEqual(loader.loadCallCount, 0, "Expected no loading requests before view is loaded")
+        XCTAssertEqual(loader.loadFeedCallCount, 0, "Expected no loading requests before view is loaded")
         
         sut.loadViewIfNeeded()
-        XCTAssertEqual(loader.loadCallCount, 1, "Expected a loading request once view is loaded")
+        XCTAssertEqual(loader.loadFeedCallCount, 1, "Expected a loading request once view is loaded")
         
         sut.simulateUserInitiatedFeedReload()
-        XCTAssertEqual(loader.loadCallCount, 2, "Expected another loading request once user initiates a load")
+        XCTAssertEqual(loader.loadFeedCallCount, 2, "Expected another loading request once user initiates a load")
         
         sut.simulateUserInitiatedFeedReload()
-        XCTAssertEqual(loader.loadCallCount, 3, "Expected a third loading request once user initiates another load")
+        XCTAssertEqual(loader.loadFeedCallCount, 3, "Expected a third loading request once user initiates another load")
     }
     
     func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
@@ -72,6 +72,23 @@ final class FeedViewControllerTests: XCTestCase {
         loader.completeFeedLoadingWithError(at: 1)
         assertThat(sut, isRendering: [image0])
     }
+    
+    func test_feedImageView_loadsImageURLWhenVisible() {
+        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        loader.completeFeedLoading(with: [image0, image1])
+        
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until view become visible")
+        
+        sut.simulateFeedImageViewVisible(at: 0)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.imageURL], "Expected first image URL requests once first view becomes visible")
+        
+        sut.simulateFeedImageViewVisible(at: 1)
+        XCTAssertEqual(loader.loadedImageURLs, [image0.imageURL, image1.imageURL], "Expected second image URL requests once second view becomes visible")
+    }
 }
 
 // MARK: - Helpers
@@ -79,7 +96,7 @@ private extension FeedViewControllerTests {
     
     func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = FeedViewController(loader: loader)
+        let sut = FeedViewController(feedLoader: loader, imageLoader: loader)
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(loader, file: file, line: line)
         return (sut, loader)
@@ -116,24 +133,33 @@ private extension FeedViewControllerTests {
         XCTAssertEqual(cell.descriptionText, item.description, "Expected description text to be \(String(describing: item.description)) for image view at index \(index)", file: file, line: line)
     }
     
-    class LoaderSpy: FeedLoader {
+    class LoaderSpy: FeedLoader, FeedImageDataLoader {
         
-        private var completions = [(FeedLoader.Result) -> Void]()
-        var loadCallCount: Int {
-            completions.count
+        // MARK: - FeedLoader
+        private var feedRequests = [(FeedLoader.Result) -> Void]()
+        
+        var loadFeedCallCount: Int {
+            feedRequests.count
         }
         
         func load(completion: @escaping (FeedLoader.Result) -> Void) {
-            completions.append(completion)
+            feedRequests.append(completion)
         }
         
-        func completeFeedLoading(with feed: [FeedItem] = [], at index: Int) {
-            completions[index](.success(feed))
+        func completeFeedLoading(with feed: [FeedItem] = [], at index: Int = 0) {
+            feedRequests[index](.success(feed))
         }
         
-        func completeFeedLoadingWithError(at index: Int) {
+        func completeFeedLoadingWithError(at index: Int = 0) {
             let error = NSError(domain: "an error", code: 0)
-            completions[index](.failure(error))
+            feedRequests[index](.failure(error))
+        }
+        
+        // MARK: - FeedImageDataLoader
+        private(set) var loadedImageURLs = [URL]()
+        
+        func loadImageData(from url: URL) {
+            loadedImageURLs.append(url)
         }
     }
     
@@ -161,6 +187,10 @@ private extension FeedViewController {
         let dataSource = tableView.dataSource
         let index = IndexPath(row: row, section: feedImagesSection)
         return dataSource?.tableView(tableView, cellForRowAt: index)
+    }
+    
+    func simulateFeedImageViewVisible(at index: Int) {
+        _ = feedImageView(at: index)
     }
 }
 
