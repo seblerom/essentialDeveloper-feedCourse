@@ -22,7 +22,7 @@ public final class FeedRefreshViewController: NSObject {
     // MARK: - Constants
     private let feedLoader: FeedLoader
     
-    // MARK: - Init (Life cycle)
+    // MARK: - Life cycle
     init(feedLoader: FeedLoader) {
         self.feedLoader = feedLoader
     }
