@@ -56,6 +56,7 @@
 		3817104F27E9EA5B004FCA2F /* FeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3817104E27E9EA5B004FCA2F /* FeedImageDataLoader.swift */; };
 		3817105827E9ED1D004FCA2F /* FeedRefreshViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3817105727E9ED1D004FCA2F /* FeedRefreshViewController.swift */; };
 		3817105A27E9F2C7004FCA2F /* FeedImageCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3817105927E9F2C7004FCA2F /* FeedImageCellController.swift */; };
+		3817105D27E9F70E004FCA2F /* FeedUIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3817105C27E9F70E004FCA2F /* FeedUIComposer.swift */; };
 		38D2002B27B2C9E6008FDAB6 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D2002A27B2C9E6008FDAB6 /* XCTestCase+MemoryLeakTracking.swift */; };
 		38D5A1DA277C940D002F7B6F /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D5A1D1277C940D002F7B6F /* EssentialFeed.framework */; };
 		38D5A1E0277C940D002F7B6F /* EssentialFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 38D5A1D4277C940D002F7B6F /* EssentialFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -160,6 +161,7 @@
 		3817104E27E9EA5B004FCA2F /* FeedImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataLoader.swift; sourceTree = "<group>"; };
 		3817105727E9ED1D004FCA2F /* FeedRefreshViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRefreshViewController.swift; sourceTree = "<group>"; };
 		3817105927E9F2C7004FCA2F /* FeedImageCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageCellController.swift; sourceTree = "<group>"; };
+		3817105C27E9F70E004FCA2F /* FeedUIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedUIComposer.swift; sourceTree = "<group>"; };
 		38D2002A27B2C9E6008FDAB6 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		38D5A1D1277C940D002F7B6F /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		38D5A1D4277C940D002F7B6F /* EssentialFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EssentialFeed.h; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 		3817105027E9EA6F004FCA2F /* Feed UI */ = {
 			isa = PBXGroup;
 			children = (
+				3817105B27E9F704004FCA2F /* Composers */,
 				3817105227E9EA7D004FCA2F /* Views */,
 				3817105127E9EA77004FCA2F /* Controllers */,
 			);
@@ -405,6 +408,14 @@
 			children = (
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		3817105B27E9F704004FCA2F /* Composers */ = {
+			isa = PBXGroup;
+			children = (
+				3817105C27E9F70E004FCA2F /* FeedUIComposer.swift */,
+			);
+			path = Composers;
 			sourceTree = "<group>";
 		};
 		38D2002927B2C9C3008FDAB6 /* Helpers */ = {
@@ -761,6 +772,7 @@
 				3817104827E8AC75004FCA2F /* FeedViewController.swift in Sources */,
 				3817104A27E8E818004FCA2F /* FeedImageCell.swift in Sources */,
 				3817105A27E9F2C7004FCA2F /* FeedImageCellController.swift in Sources */,
+				3817105D27E9F70E004FCA2F /* FeedUIComposer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
