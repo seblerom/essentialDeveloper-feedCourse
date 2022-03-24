@@ -11,10 +11,10 @@ import EssentialFeed
 final class FeedImageCellController {
     
     // MARK: - Constants
-    private let viewModel: FeedImageViewModel
+    private let viewModel: FeedImageViewModel<UIImage>
     
     // MARK: - Life cycle
-    init(viewModel: FeedImageViewModel) {
+    init(viewModel: FeedImageViewModel<UIImage>) {
         self.viewModel = viewModel
     }
     
