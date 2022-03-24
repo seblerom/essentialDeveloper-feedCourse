@@ -325,6 +325,7 @@
 			children = (
 				3817102B27E88E69004FCA2F /* EssentialFeediOS.h */,
 				3817104D27E9EA4B004FCA2F /* Feed Image Loader */,
+				3817106327EC9F77004FCA2F /* Feed Presentation */,
 				3817105027E9EA6F004FCA2F /* Feed UI */,
 			);
 			path = EssentialFeediOS;
@@ -357,7 +358,6 @@
 		3817105027E9EA6F004FCA2F /* Feed UI */ = {
 			isa = PBXGroup;
 			children = (
-				3817105E27EA2C5E004FCA2F /* Models */,
 				3817105B27E9F704004FCA2F /* Composers */,
 				3817105227E9EA7D004FCA2F /* Views */,
 				3817105127E9EA77004FCA2F /* Controllers */,
@@ -423,13 +423,13 @@
 			path = Composers;
 			sourceTree = "<group>";
 		};
-		3817105E27EA2C5E004FCA2F /* Models */ = {
+		3817106327EC9F77004FCA2F /* Feed Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				3817105F27EA2C67004FCA2F /* FeedViewModel.swift */,
 				3817106127EC8F5C004FCA2F /* FeedImageViewModel.swift */,
 			);
-			path = Models;
+			path = "Feed Presentation";
 			sourceTree = "<group>";
 		};
 		38D2002927B2C9C3008FDAB6 /* Helpers */ = {
