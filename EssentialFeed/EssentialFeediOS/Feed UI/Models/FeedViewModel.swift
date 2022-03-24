@@ -8,16 +8,14 @@
 import EssentialFeed
 
 final class FeedViewModel {
+    // MARK: - Type aliases
+    typealias Observer<T> = (T) -> Void
     // MARK: - Constants
     private let feedLoader: FeedLoader
     
     // MARK: - Variables
-    var onChange: ((FeedViewModel) -> Void)?
-    var onFeedLoad: (([FeedItem]) -> Void)?
-    
-    private(set) var isLoading: Bool = false {
-        didSet { onChange?(self) }
-    }
+    var onLoadingStateChange: Observer<Bool>?
+    var onFeedLoad: Observer<[FeedItem]>?
     
     // MARK: - Life cycle
     init(feedLoader: FeedLoader) {
@@ -26,13 +24,13 @@ final class FeedViewModel {
     
     // MARK: - Actions
     func loadFeed() {
-        isLoading = true
+        onLoadingStateChange?(true)
         feedLoader.load { [weak self] result in
             
             if let feed = try? result.get() {
                 self?.onFeedLoad?(feed)
             }
-            self?.isLoading = false
+            self?.onLoadingStateChange?(false)
         }
     }
 }
