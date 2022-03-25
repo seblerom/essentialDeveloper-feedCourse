@@ -5,7 +5,7 @@
 //  Created by Sebastian Leon on 3/24/22.
 //
 
-import EssentialFeed
+import Foundation
 
 struct FeedImageViewModel<Image> {
     let description: String?

@@ -7,22 +7,13 @@
 
 import EssentialFeed
 
-struct FeedLoadingViewModel {
-    let isLoading: Bool
-}
-
 protocol FeedLoadingView {
     func display(_ viewModel: FeedLoadingViewModel)
-}
-
-struct FeedViewModel {
-    let feed: [FeedItem]
 }
 
 protocol FeedView {
     func display(_ viewModel: FeedViewModel)
 }
-
 
 final class FeedPresenter {
     
