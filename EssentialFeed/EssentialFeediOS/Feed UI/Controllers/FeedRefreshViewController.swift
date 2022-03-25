@@ -13,11 +13,11 @@ public final class FeedRefreshViewController: NSObject, FeedLoadingView {
     private(set) lazy var view = loadView()
     
     // MARK: - Contants
-    private let presenter: FeedPresenter
+    private let loadFeed: () -> Void
     
     // MARK: - Life cycle
-    init(presenter: FeedPresenter) {
-        self.presenter = presenter
+    init(loadFeed: @escaping () -> Void) {
+        self.loadFeed = loadFeed
     }
     
     // MARK: - Actions
@@ -33,6 +33,6 @@ public final class FeedRefreshViewController: NSObject, FeedLoadingView {
     
     @objc
     func refresh() {
-        presenter.loadFeed()
+        loadFeed()
     }
 }

@@ -25,28 +25,21 @@ protocol FeedView {
 
 
 final class FeedPresenter {
-
-    // MARK: - Constants
-    private let feedLoader: FeedLoader
     
     // MARK: - Variables
     var feedView: FeedView?
     var loadingView: FeedLoadingView?
     
-    // MARK: - Life cycle
-    init(feedLoader: FeedLoader) {
-        self.feedLoader = feedLoader
+    func didStartLoadingFeed() {
+        loadingView?.display(FeedLoadingViewModel(isLoading: true))
     }
     
-    // MARK: - Actions
-    func loadFeed() {
-        loadingView?.display(FeedLoadingViewModel(isLoading: true))
-        feedLoader.load { [weak self] result in
-            
-            if let feed = try? result.get() {
-                self?.feedView?.display(FeedViewModel(feed: feed))
-            }
-            self?.loadingView?.display(FeedLoadingViewModel(isLoading: false))
-        }
+    func didFinishLoadingFeed(with feed: [FeedItem]) {
+        feedView?.display(FeedViewModel(feed: feed))
+        loadingView?.display(FeedLoadingViewModel(isLoading: false))
+    }
+    
+    func didFinishLoadingFeed(with error: Error) {
+        loadingView?.display(FeedLoadingViewModel(isLoading: false))
     }
 }
