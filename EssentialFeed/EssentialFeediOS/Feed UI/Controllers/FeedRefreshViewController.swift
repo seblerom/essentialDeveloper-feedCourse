@@ -7,17 +7,21 @@
 
 import UIKit
 
+protocol FeedRefreshViewControllerDelegate {
+    func didRequestFeedRefresh()
+}
+
 public final class FeedRefreshViewController: NSObject, FeedLoadingView {
     
     // MARK: - Variables
     private(set) lazy var view = loadView()
     
     // MARK: - Contants
-    private let loadFeed: () -> Void
+    private let delegate: FeedRefreshViewControllerDelegate
     
     // MARK: - Life cycle
-    init(loadFeed: @escaping () -> Void) {
-        self.loadFeed = loadFeed
+    init(delegate: FeedRefreshViewControllerDelegate) {
+        self.delegate = delegate
     }
     
     // MARK: - Actions
@@ -25,14 +29,15 @@ public final class FeedRefreshViewController: NSObject, FeedLoadingView {
         viewModel.isLoading ? view.beginRefreshing() : view.endRefreshing()
     }
     
+    @objc
+    func refresh() {
+        delegate.didRequestFeedRefresh()
+    }
+    
+    // MARK: - Private Actions
     private func loadView() -> UIRefreshControl {
         let view = UIRefreshControl()
         view.addTarget(self, action: #selector(refresh), for: .valueChanged)
         return view
-    }
-    
-    @objc
-    func refresh() {
-        loadFeed()
     }
 }
